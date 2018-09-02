@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html data-ng-app="ViewModelValidation" lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<title>Portal do Aluno</title>
+
+<!-- Comentários para Avaliação do Código: 
+	Chamada para os Ícones Bootstrap -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Comentários para Avaliação do Código: 
+	/Chamada para os Ícones Bootstrap -->
+
+<!-- Comentários para Avaliação do Código: 
+	Chamadas para as folhas de estilo -->
+<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="css/pageStyle.css" />
+<link rel="stylesheet" type="text/css" href="css/menuStyle.css" />
+<link rel="stylesheet" type="text/css" href="css/formStyle.css">
+<script src="js/modernizr.custom.js"></script>
+<!-- Comentários para Avaliação do Código: 
+	/Chamadas para as folhas de estilo -->
+
+<!-- Comentários para Avaliação do Código: 
+	Validação do formulário com AngularJS para estabelecer a arquitetura MVVM -->
+<script
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/loginViewModel.js"></script>
+
+<!-- Comentários para Avaliação do Código: 
+	Tratamento das mensagens AngularJS -->
+<script type="text/javascript">
+	//manipulação das mensagens recebidas da validação AngulasJS.
+	function msgViewModel(textbox) {
+		if (textbox.value == '') {
+			textbox
+					.setCustomValidity('Favor preencher a informação solicitada.');
+		} else if (textbox.validity.typeMismatch) {
+			textbox
+					.setCustomValidity('Favor informar corretamente o email cadastrado.');
+		} else {
+			textbox.setCustomValidity('');
+		}
+		return true;
+	}
+</script>
+<!-- Comentários para Avaliação do Código: 
+	/Validação do formulário com AngularJS para estabelecer a arquitetura MVVM -->
+
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h1>
+				Portal do Aluno<span>Plataforma Online de Gestão Acadêmica</span>
+			</h1>
+			<!-- Comentários para Avaliação do Código:
+				Formulário
+				Ao preencher o formulário, a validação prévida 
+				da camada "view" é ativada através do AngularJS.
+				Ao submeter o formulário, o "view model" é acionado 
+				através da página "validateLogin" com a chamada ao web service RESTful
+				para a validação de usuário e senha junto ao banco de dados. -->
+			<form class="contact100-form validate-form" name="myForm"
+				data-ng-controller="ViewModelValidation" action="validateLogin.jsp"
+				method="post">
+
+				<div class="wrap-input100 validate-input">
+					<input class="input100" id="email" type="email" name="login"
+						title=" " data-ng-model="email.text" required
+						oninvalid="msgViewModel(this);" oninput="msgViewModel(this);"
+						placeholder="Email"> <label class="label-input100"
+						for="email"> <i class="fa fa-envelope"
+						style="font-size: 24px"></i>
+					</label>
+				</div>
+
+				<div class="wrap-input100 validate-input">
+					<input class="input100" type="password" name="senha" title=" "
+						data-ng-model="model" required oninvalid="msgViewModel(this);"
+						oninput="msgViewModel(this);" placeholder="Senha"> <label
+						class="label-input100" for="password"> <i
+						class="fa fa-key" style="font-size: 24px"></i>
+					</label>
+				</div>
+
+				<div role="alert">
+					<span class="error" data-ng-show="myForm.input.$error.required"></span>
+				</div>
+
+				<div class="wrap-contact100-form-btn">
+					<div class="contact100-form-bgbtn"></div>
+					<button class="contact100-form-btn" type="submit" value="acessar">Entrar</button>
+				</div>
+			</form>
+			<!-- Formulário -->
+		</header>
+	</div>
+	<!-- /container -->
+</body>
+</html>
